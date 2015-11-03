@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toadyadv_title"
+        layout="@layout/activity_title" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="点击"
+            android:textColor="#b24622"
+            android:textSize="@dimen/first_font" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/atten_info" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提前关注！机会不容错过！"
+            android:textColor="#b24622"
+            android:textSize="@dimen/first_font" />
+
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/toadyadv_grid"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:horizontalSpacing="12dp"
+        android:numColumns="2"
+        android:scrollbars="none"
+        android:verticalSpacing="12dp" />
+
+    <LinearLayout
+        android:id="@+id/toadyadv_tomoview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/adv_btn"
+        android:clickable="true"
+        android:gravity="center"
+        android:padding="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/title_rig_normal"
+            android:gravity="center"
+            android:text="明日预告"
+            android:textColor="@color/white"
+            android:textSize="@dimen/first_font" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

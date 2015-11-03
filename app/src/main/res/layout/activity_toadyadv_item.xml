@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/toadyadv_item_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="centerCrop"
+            android:src="@color/text_press" />
+
+
+        <TextView
+            android:id="@+id/toadyadv_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:text="9:00"
+            android:textColor="@color/white"
+            android:textSize="@dimen/second_font" />
+
+        <CheckBox
+            android:id="@+id/toadyadv_item_atten"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/atten_cb"
+            android:button="@null"
+            android:padding="6dp" />
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/toadyadv_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="产品名"
+        android:textColor="#121212"
+        android:textSize="@dimen/second_font" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格:"
+            android:textColor="#6b6b6b"
+            android:textSize="@dimen/second_font" />
+
+        <TextView
+            android:id="@+id/toadyadv_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$5"
+            android:textColor="#d02c06"
+            android:textSize="@dimen/second_font" />
+    </LinearLayout>
+
+
+</LinearLayout>

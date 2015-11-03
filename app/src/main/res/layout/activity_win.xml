@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eb8265"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:scrollbars="none">
+
+
+        <LinearLayout
+            android:id="@+id/win_im"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@mipmap/win"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/win_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="80dp"
+                android:layout_marginRight="80dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="恭喜猜神以100元的出价获得19:00档时段的一等奖"
+                android:textColor="#fc2800"
+                android:textSize="@dimen/second_font" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/win_share"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/win_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="炫耀一下"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_font" />
+
+            <TextView
+                android:id="@+id/win_close"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/win_btn"
+                android:clickable="true"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="关闭"
+                android:textColor="@color/white"
+                android:textSize="@dimen/title_font" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/win_image"
+                android:layout_width="168dp"
+                android:layout_height="112dp"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@color/win_btn_press" />
+
+            <ImageView
+                android:layout_width="146dp"
+                android:layout_height="116dp"
+                android:layout_alignLeft="@id/win_image"
+                android:layout_marginLeft="85dp"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/win_win" />
+
+            <TextView
+                android:id="@+id/win_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/win_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="产品名\n价格：$5"
+                android:textColor="@color/white"
+                android:textSize="@dimen/second_font" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>

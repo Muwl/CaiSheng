@@ -75,7 +75,7 @@
                         android:layout_height="wrap_content"
                         android:text="价值："
                         android:textColor="#6b6b6b"
-                        android:textSize="@dimen/first_font" />
+                        android:textSize="@dimen/second_font" />
 
                     <TextView
                         android:id="@+id/main_money"
@@ -91,7 +91,7 @@
                         android:layout_marginLeft="8dp"
                         android:text="免费提供："
                         android:textColor="#6b6b6b"
-                        android:textSize="@dimen/first_font" />
+                        android:textSize="@dimen/second_font" />
 
                     <TextView
                         android:id="@+id/main_freenum"

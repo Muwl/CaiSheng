@@ -7,8 +7,19 @@
     <color name="transparent">#00000000</color>
     <color name="white">#ffffff</color>
     <color name="text_press">#c4c2c2</color>
+    <color name="item_press">#dddada</color>
     <color name="text_bg">#66000000</color>
     <color name="divider">#a6a6a6</color>
     <color name="menu_item_normal">#ffbf25</color>
     <color name="menu_item_press">#dca726</color>
+    <color name="adv_normal">#dd5c3c</color>
+    <color name="adv_press">#d63f19</color>
+
+    <color name="win_btn_normal">#ffbf25</color>
+    <color name="win_btn_press">#d9a936</color>
+
+    <color name="getcode_normal">#c3937d</color>
+    <color name="getcode_press">#9c7f72</color>
+
+
 </resources>
