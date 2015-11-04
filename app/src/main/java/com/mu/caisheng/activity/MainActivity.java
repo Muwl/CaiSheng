@@ -112,7 +112,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.main_guess:
-                Intent intent4= new Intent(MainActivity.this, LoginActivity.class);
+                Intent intent4 = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent4);
 
                 break;
@@ -133,9 +133,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 menuWindow.dismiss();
                 break;
             case R.id.menu_guess:
+                Intent intent5 = new Intent(MainActivity.this, RecodeActivity.class);
+                startActivity(intent5);
+
                 menuWindow.dismiss();
                 break;
             case R.id.menu_about:
+                Intent intent6 = new Intent(MainActivity.this, AboutActivity.class);
+                startActivity(intent6);
                 menuWindow.dismiss();
                 break;
 
