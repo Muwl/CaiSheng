@@ -7,6 +7,7 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 
 import com.mu.caisheng.utils.MyApplication;
+import com.umeng.message.PushAgent;
 
 
 /**
@@ -25,6 +26,7 @@ public class BaseActivity extends FragmentActivity {
 		MyApplication.getInstance().addActivity(this);
 		imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		super.onCreate(savedInstanceState);
+		PushAgent.getInstance(this).onAppStart();
 
 	}
 

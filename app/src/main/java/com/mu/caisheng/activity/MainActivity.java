@@ -21,6 +21,8 @@ import com.mu.caisheng.R;
 import com.mu.caisheng.adapter.MainAdapter;
 import com.mu.caisheng.utils.DensityUtil;
 import com.mu.caisheng.view.HorizontalListView;
+import com.umeng.message.ALIAS_TYPE;
+import com.umeng.message.PushAgent;
 
 import java.util.zip.Inflater;
 
@@ -58,10 +60,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private PopupWindow menuWindow;
 
+    PushAgent mPushAgent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.enable();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mPushAgent.addAlias("18611644286", "phone");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }).start();
+
         initView();
     }
 
