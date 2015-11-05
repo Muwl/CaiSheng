@@ -75,18 +75,17 @@ public class ToosUtils {
 
 
 	/**
-	 * 判断字符串是否为手机�??
-	 * 
+	 * 判断字符串是否为手机�?
+	 *
 	 * @param msg
-	 * @return true为手机号 ,false不为手机�??
+	 * @return true为手机号 ,false不为手机�?
 	 */
 	public static boolean MatchPhone(String name) {
 		Pattern p = Pattern
-				.compile("^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$");
+				.compile("^((1[3,7][0-9])|(15[^4,\\D])|(18[0-3,5-9])|(14[5,7]))\\d{8}$");
 		Matcher m = p.matcher(name);
 		return m.matches();
 	}
-
 	/**
 	 * bitmap转换成file
 	 * 
