@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     private void initSDK() {
         // 初始化短信SDK
-        SMSSDK.initSDK(this, APPKEY, APPSECRET, true);
+        SMSSDK.initSDK(this, APPKEY, APPSECRET, false);
         EventHandler eh = new EventHandler() {
 
             @Override
