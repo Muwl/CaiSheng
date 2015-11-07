@@ -10,7 +10,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.mu.caisheng.R;
+import com.mu.caisheng.utils.Constant;
 import com.mu.caisheng.utils.LogManager;
 import com.mu.caisheng.utils.ToastUtils;
 import com.mu.caisheng.utils.ToosUtils;
@@ -57,8 +64,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     time.start();
                     break;
                 case 112:
-                    pro.setVisibility(View.GONE);
-                    ToastUtils.displayShortToast(LoginActivity.this, "验证成功！");
+                    getLogin();
                     //前段短信验证成功 调用后台
                     break;
 
@@ -203,6 +209,36 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
         }
     }
+
+        private  void getLogin(){
+            HttpUtils utils = new HttpUtils();
+            utils.configTimeout(20000);
+            RequestParams rp=new RequestParams();
+            rp.addBodyParameter("phone",sname);
+            rp.addBodyParameter("code",scode);
+            utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "", rp, new RequestCallBack<String>() {
+                @Override
+                public void onStart() {
+                    super.onStart();
+                }
+
+                @Override
+                public void onSuccess(ResponseInfo<String> responseInfo) {
+                    pro.setVisibility(View.GONE);
+
+
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    pro.setVisibility(View.GONE);
+                    ToastUtils.displaySendFailureToast(LoginActivity.this);
+                }
+            });
+
+
+        }
+
 
     @Override
     protected void onDestroy() {

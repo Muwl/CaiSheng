@@ -13,29 +13,41 @@ import android.content.SharedPreferences.Editor;
 public class ShareDataTool {
 
 	/**
-	 * 保存网关Id
+	 * 保存登陆信息
 	 * 
 	 * @param context
 	 * @return
 	 */
-	public static boolean SaveGateId(Context context, String gateId) {
+	public static boolean SaveLoginInfo(Context context, String token,int state) {
 		SharedPreferences sp = context.getSharedPreferences("sp",
 				Context.MODE_PRIVATE);
 		Editor e = sp.edit();
-		e.putString("gateId", gateId);
+		e.putString("token", token);
+		e.putInt("state", state);
 		return e.commit();
 	}
 
 	/**
-	 * 获取网关Id
-	 * 
+	 * 获取token
+	 *
 	 * @param context
 	 * @return
 	 */
-	public static String getGateId(Context context) {
+	public static String getToken(Context context) {
 
 		return context.getSharedPreferences("sp", Context.MODE_PRIVATE)
-				.getString("gateId", "");
+				.getString("token", "");
+	}
+
+	/**
+	 * 获取state  0 没维护个人信息 1维护了个人信息
+	 *
+	 * @param context
+	 * @return
+	 */
+	public static int getState(Context context) {
+		return context.getSharedPreferences("sp", Context.MODE_PRIVATE)
+				.getInt("state", 0);
 	}
 
 }

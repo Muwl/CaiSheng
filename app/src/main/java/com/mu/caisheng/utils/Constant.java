@@ -3,7 +3,7 @@ package com.mu.caisheng.utils;
 
 public class Constant {
 
-	public static final String ROOT_PATH = "http://101.200.183.163";
+	public static final String ROOT_PATH = "http://27.189.32.30";
 
 	// 锁，是否关闭Log日志输出
 	public static final boolean LOGOFF = false;
