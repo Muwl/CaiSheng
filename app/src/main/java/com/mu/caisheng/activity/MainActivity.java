@@ -172,22 +172,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.menu_data:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                    ToastUtils.displayShortToast(this, "请登录");
+                    return;
+                }
                 Intent intent1 = new Intent(MainActivity.this, PersonDataActivity.class);
                 intent1.putExtra("flag",1);
                 startActivity(intent1);
                 menuWindow.dismiss();
                 break;
             case R.id.menu_atten:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                    ToastUtils.displayShortToast(this, "请登录");
+                    return;
+                }
                 Intent intent2 = new Intent(MainActivity.this, AttenActivity.class);
                 startActivity(intent2);
                 menuWindow.dismiss();
                 break;
             case R.id.menu_info:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                    ToastUtils.displayShortToast(this, "请登录");
+                    return;
+                }
                 Intent intent3 = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(intent3);
                 menuWindow.dismiss();
                 break;
             case R.id.menu_guess:
+                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                    ToastUtils.displayShortToast(this, "请登录");
+                    return;
+                }
                 Intent intent5 = new Intent(MainActivity.this, RecodeActivity.class);
                 startActivity(intent5);
                 menuWindow.dismiss();

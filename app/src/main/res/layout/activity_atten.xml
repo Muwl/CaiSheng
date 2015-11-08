@@ -8,6 +8,10 @@
         android:id="@+id/atten_title"
         layout="@layout/activity_title" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <GridView
         android:id="@+id/atten_grid"
@@ -19,6 +23,13 @@
         android:numColumns="2"
         android:scrollbars="none"
         android:verticalSpacing="12dp" />
+
+        <include
+            android:id="@+id/atten_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

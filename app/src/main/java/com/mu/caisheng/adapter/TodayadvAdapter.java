@@ -1,6 +1,8 @@
 package com.mu.caisheng.adapter;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,8 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
 import com.mu.caisheng.R;
+import com.mu.caisheng.model.GuessEntity;
 import com.mu.caisheng.utils.DensityUtil;
+import com.mu.caisheng.utils.TimeUtils;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2015/11/3.
@@ -20,29 +27,35 @@ public class TodayadvAdapter extends BaseAdapter {
 
     private Context context;
     private int width;
+    private List<GuessEntity> entities;
+    private Handler handler;
+    private BitmapUtils bitmapUtils;
 
-    public TodayadvAdapter(Context context, int width) {
+    public TodayadvAdapter(Context context, int width,List<GuessEntity> entities,Handler handler) {
         this.context = context;
         this.width = width;
+        this.entities=entities;
+        this.handler=handler;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder = null;
         if (convertView == null) {
             convertView = View.inflate(context, R.layout.activity_toadyadv_item, null);
@@ -60,6 +73,25 @@ public class TodayadvAdapter extends BaseAdapter {
         params.width = (width - DensityUtil.dip2px(context, 32)) / 2;
         params.height = (width - DensityUtil.dip2px(context, 32)) / 2;
         holder.imageView.setLayoutParams(params);
+
+        bitmapUtils.display(holder.imageView, entities.get(position).products_image);
+        holder.name.setText(entities.get(position).products_name);
+        holder.price.setText("$" + entities.get(position).price);
+        holder.time.setText(TimeUtils.getMin(entities.get(position).events_date));
+        if (entities.get(position).favorite==1){
+            holder.checkBox.setChecked(true);
+        }else{
+            holder.checkBox.setChecked(false);
+        }
+        holder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message message=new Message();
+                message.what=100;
+                message.arg1=position;
+                handler.sendMessage(message);
+            }
+        });
         return convertView;
     }
 

@@ -33,6 +33,9 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/atten_cb"
             android:button="@null"
+            android:focusable="false"
+            android:enabled="false"
+            android:clickable="true"
             android:padding="6dp" />
     </RelativeLayout>
 

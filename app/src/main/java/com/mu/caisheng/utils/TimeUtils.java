@@ -16,6 +16,9 @@ public class TimeUtils {
 	public static final SimpleDateFormat DATE_FORMAT_DATE2 = new SimpleDateFormat(
 			"yyyy-M-d");
 
+	public static final SimpleDateFormat DATE_FORMAT_DATE3 = new SimpleDateFormat(
+			"MM-dd");
+
 	public static Date getDateByStr(String dd) {
 
 		Date date;
@@ -27,6 +30,13 @@ public class TimeUtils {
 		}
 		return date;
 	}
+
+	public static String getMin(int mill){
+		Date date=new Date();
+		date.setTime(mill * 1000);
+		return  DATE_FORMAT_DATE3.format(date);
+	}
+
 
 	public static String getCurTime(int cur,int end){
 		if (end<=cur){
