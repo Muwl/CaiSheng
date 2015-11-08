@@ -37,7 +37,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     private TextView save;
 
-    private EditText name;
+    private TextView name;
 
     private EditText phone;
 
@@ -45,20 +45,24 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     private View pro;
 
+    private int flag;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
+        flag=getIntent().getIntExtra("flag",flag);
         initView();
-        getInfo();
-
+        if (flag==1){
+            getInfo();
+        }
     }
 
     private void initView() {
         title = (TextView) findViewById(R.id.title_text);
         back = (ImageView) findViewById(R.id.title_back);
         save = (TextView) findViewById(R.id.title_save);
-        name = (EditText) findViewById(R.id.data_name);
+        name = (TextView) findViewById(R.id.data_name);
         phone = (EditText) findViewById(data_phone);
         address = (EditText) findViewById(R.id.data_address);
         pro = findViewById(R.id.data_pro);
@@ -85,7 +89,6 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
 
     private void getInfo() {
-
         if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
             return;
         }
@@ -93,7 +96,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         utils.configTimeout(20000);
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("token", ShareDataTool.getToken(this));
-        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "login", rp, new RequestCallBack<String>() {
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "personData", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -112,8 +115,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                         if (entity == null) {
                             return;
                         }
-                        if (!ToosUtils.isStringEmpty(entity.name)) {
-                            name.setText(entity.name);
+                        if (!ToosUtils.isStringEmpty(entity.username)) {
+                            name.setText(entity.username);
                         }
                         if (!ToosUtils.isStringEmpty(entity.phone)) {
                             phone.setText(entity.phone);
@@ -167,10 +170,10 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         utils.configTimeout(20000);
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("token", ShareDataTool.getToken(this));
-        rp.addBodyParameter("name", ToosUtils.getTextContent(name));
+        rp.addBodyParameter("username", ToosUtils.getTextContent(name));
         rp.addBodyParameter("phone", ToosUtils.getTextContent(phone));
         rp.addBodyParameter("address", ToosUtils.getTextContent(address));
-        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "updatePersonDate", rp, new RequestCallBack<String>() {
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "updatePersonData", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 super.onStart();
@@ -203,6 +206,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onFailure(HttpException e, String s) {
                 pro.setVisibility(View.GONE);
+                e.printStackTrace();
                 ToastUtils.displaySendFailureToast(PersonDataActivity.this);
             }
         });

@@ -28,86 +28,38 @@ public class TimeUtils {
 		return date;
 	}
 
-	public static String getStringByString(String dd) {
-
-		Date date;
-		try {
-			date = DATE_FORMAT_DATE2.parse(dd);
-		} catch (java.text.ParseException e) {
-			date = null;
-			e.printStackTrace();
+	public static String getCurTime(int cur,int end){
+		if (end<=cur){
+			return "已结束";
 		}
-		return getDate(date);
-	}
-
-	/**
-	 * 将现在时间转换成 yyyy-MM-dd
-	 * 
-	 * @return 现在时间的yyyy-MM-dd
-	 */
-	public static String getDate() {
-		return DATE_FORMAT_DATE.format(new Date());
-	}
-
-	/**
-	 * 将Date 转换�? yyyy-mm-dd输出
-	 * 
-	 * @param date
-	 * @return
-	 */
-	public static String getDate(Date date) {
-		return DATE_FORMAT_DATE.format(date);
-	}
-
-	public static String getTime(long timeInMillis, SimpleDateFormat dateFormat) {
-		return dateFormat.format(new Date(timeInMillis));
-	}
-
-	/**
-	 * 通过年和月转换成 yyyy-MM-dd
-	 * 
-	 * @param year
-	 * @param month
-	 * @return yyyy-MM-dd
-	 */
-	public static String getDateByYAM(String year, String month) {
-		if (Integer.valueOf(month) < 10) {
-			return (year + "-0" + month + "-" + "01");
-		} else {
-			return (year + "-" + month + "-" + "01");
+		int temp=end-cur;
+		int min=temp/60;
+		int mill=temp%60;
+		String smin=null;
+		String smill=null;
+		if (min==0){
+			smin=null;
+		}else if(min>0 && min<=9){
+			smin="0"+min;
+		}else{
+			smin=""+min;
 		}
+		if (mill==0){
+			smill="00";
+		}else if(mill>0 && mill<=9){
+			smill="0"+mill;
+		}else{
+			smill=""+mill;
+		}
+		if (min==0){
+			return  "剩余时间："+smill+"秒";
+		}
+		return  "剩余时间："+smin+":"+smill+"秒";
+
+
+
 	}
 
-	/**
-	 * 获取月和�?
-	 * 
-	 * @param date
-	 * @return
-	 */
-	public static String getString(String date) {
-		LogManager.LogShow("date", date, LogManager.ERROR);
-		Date date2 = getDateByStr(date);
-		date = DATE_FORMAT_DATE2.format(date2);
-		String year = date.substring(0, 4);
-		String monthday = date.substring(5);
-		return monthday + "\n(" + year + ")";
-	}
-
-	/**
-	 * 获取�?
-	 * 
-	 * @param date
-	 * @return
-	 */
-	public static String getMonthString(String date) {
-		LogManager.LogShow("date", date, LogManager.ERROR);
-		Date date2 = getDateByStr(date);
-		date = DATE_FORMAT_DATE.format(date2);
-		String year = date.substring(0, 4);
-		String month = date.substring(5, 7);
-		String day = date.substring(8);
-		return month + "�?" + "\n(" + year + ")";
-	}
 
 	/**
 	 * 获取当前时间的小�?

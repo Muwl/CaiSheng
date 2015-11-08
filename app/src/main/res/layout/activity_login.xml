@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eb8265"
-    android:fillViewport="true"
-    android:scrollbars="none">
+
 
     <RelativeLayout
         android:layout_width="match_parent"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="#eb8265"
         android:layout_height="match_parent">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#eb8265"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
 
         <LinearLayout
@@ -118,10 +121,10 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/first_font" />
         </LinearLayout>
+</ScrollView>
 
         <include
             android:id="@+id/login_pro"
             layout="@layout/pro"
             android:visibility="gone" />
     </RelativeLayout>
-</ScrollView>

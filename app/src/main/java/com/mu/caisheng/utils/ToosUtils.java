@@ -4,10 +4,13 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.os.Environment;
 import android.widget.TextView;
+
+import com.mu.caisheng.activity.LoginActivity;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -71,6 +74,13 @@ public class ToosUtils {
 		} else {
 			return true;
 		}
+	}
+
+	public static void goLogin(Context context){
+		ShareDataTool.saveLoginInfo(context,"",0);
+		Intent intent=new Intent(context, LoginActivity.class);
+		context.startActivity(intent);
+
 	}
 
 

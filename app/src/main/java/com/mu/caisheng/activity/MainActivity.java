@@ -2,13 +2,15 @@ package com.mu.caisheng.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.Image;
+
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -17,13 +19,34 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lidroid.xutils.BitmapUtils;
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.RequestParams;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+import com.lidroid.xutils.http.client.HttpRequest;
 import com.mu.caisheng.R;
 import com.mu.caisheng.adapter.MainAdapter;
+import com.mu.caisheng.model.GuessEntity;
+import com.mu.caisheng.model.PersonDataEntity;
+import com.mu.caisheng.model.ReturnState;
+import com.mu.caisheng.utils.Constant;
 import com.mu.caisheng.utils.DensityUtil;
+import com.mu.caisheng.utils.LogManager;
+import com.mu.caisheng.utils.ShareDataTool;
+import com.mu.caisheng.utils.TimeUtils;
+import com.mu.caisheng.utils.ToastUtils;
+import com.mu.caisheng.utils.ToosUtils;
 import com.mu.caisheng.view.HorizontalListView;
 import com.umeng.message.ALIAS_TYPE;
 import com.umeng.message.PushAgent;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.Inflater;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -62,25 +85,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     PushAgent mPushAgent;
 
+    private View pro;
+
+    private GuessEntity entity;
+
+    private BitmapUtils bitmapUtils;
+
+    private List<GuessEntity> hotEntities;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mPushAgent = PushAgent.getInstance(this);
         mPushAgent.enable();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    mPushAgent.addAlias("18611644286", "phone");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }).start();
-
+        bitmapUtils=new BitmapUtils(this);
+        hotEntities=new ArrayList<>();
         initView();
+        getGuess();
+        getHotGoods();
     }
 
     private void initView() {
@@ -98,6 +122,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         guess = (TextView) findViewById(R.id.main_guess);
         comNum = (TextView) findViewById(R.id.main_comnum);
         listView = (HorizontalListView) findViewById(R.id.main_list);
+        pro=findViewById(R.id.main_pro);
 
         title_lef.setVisibility(View.VISIBLE);
         title_rig.setVisibility(View.VISIBLE);
@@ -106,8 +131,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         guess.setOnClickListener(this);
         title.setText("财神到");
         text1.setText(Html.fromHtml("至<font color=\"#d02c06\">详情页</font>寻找<font color=\"#d02c06\">参考价区间</font>提高中奖率"));
-        adapter = new MainAdapter(this);
+        adapter = new MainAdapter(this,hotEntities);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                Uri content_url = Uri.parse(hotEntities.get(position).products_url);
+                intent.setData(content_url);
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -130,13 +166,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.main_guess:
-                Intent intent4 = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent4);
-
+                subGuess();
+//                Intent intent4 = new Intent(MainActivity.this, LoginActivity.class);
+//                startActivity(intent4);
                 break;
 
             case R.id.menu_data:
                 Intent intent1 = new Intent(MainActivity.this, PersonDataActivity.class);
+                intent1.putExtra("flag",1);
                 startActivity(intent1);
                 menuWindow.dismiss();
                 break;
@@ -153,7 +190,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             case R.id.menu_guess:
                 Intent intent5 = new Intent(MainActivity.this, RecodeActivity.class);
                 startActivity(intent5);
-
                 menuWindow.dismiss();
                 break;
             case R.id.menu_about:
@@ -204,5 +240,191 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 DensityUtil.dip2px(this, 74)); // 设置layout在PopupWindow中显示的位置
         // 如何获取我们main中的控件呢？也很简单
         // }
+    }
+
+    /**
+     * 获取猜的商品
+     */
+    private void getGuess() {
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        RequestParams rp = new RequestParams();
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "getGuessGoods", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                Gson gson = new Gson();
+                try {
+                    ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
+                    LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        if (ToosUtils.isStringEmpty(state.result)){
+                            return;
+                        }
+                        entity=gson.fromJson(state.result,GuessEntity.class);
+                        if (entity==null){
+                            return;
+                        }
+                        LogManager.LogShow("====",entity.toString(),LogManager.ERROR);
+                        bitmapUtils.display(main_image, entity.products_image);
+                        main_image.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent();
+                                intent.setAction("android.intent.action.VIEW");
+                                Uri content_url = Uri.parse(entity.products_url);
+                                intent.setData(content_url);
+                                startActivity(intent);
+                            }
+                        });
+                        name.setText(entity.products_name);
+                        price.setText("$" + entity.price);
+                        freeNum.setText(entity.free_num + "份");
+                        comNum.setText(Html.fromHtml("已有<font color=\"#d02c06\">"+entity.bidnum+"</font>人出价"));
+                        time_text.setText(TimeUtils.getCurTime(entity.now,entity.events_date+3600));
+                    } else {
+                        ToastUtils.displayShortToast(
+                                MainActivity.this, state.result);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.displaySendFailureToast(MainActivity.this);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displaySendFailureToast(MainActivity.this);
+            }
+        });
+
+
+    }
+
+    /**
+     * 获取热卖商品
+     */
+    private void getHotGoods() {
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        RequestParams rp = new RequestParams();
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "getHotGoods", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                Gson gson = new Gson();
+                try {
+                    ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
+                    LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        if (ToosUtils.isStringEmpty(state.result)){
+                            return;
+                        }
+                        Type type = new TypeToken<ArrayList<GuessEntity>>() {}.getType();
+                        List<GuessEntity> list=gson.fromJson(state.result, type);
+                        if (list==null){
+                            list=new ArrayList<GuessEntity>();
+                        }
+                        for (int i=0;i<list.size();i++){
+                            hotEntities.add(list.get(i));
+                        }
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        ToastUtils.displayShortToast(
+                                MainActivity.this, state.result);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.displaySendFailureToast(MainActivity.this);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                ToastUtils.displaySendFailureToast(MainActivity.this);
+            }
+        });
+
+
+    }
+
+
+
+    /**
+     * 提交猜价
+     */
+    private void subGuess() {
+        if (ToosUtils.isTextEmpty(input_price)){
+            ToastUtils.displayShortToast(this,"请填写猜价的价格！");
+            return;
+        }
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
+            ToastUtils.displayShortToast(this,"请登录！");
+            return;
+        }
+        if(entity==null){
+            ToastUtils.displayShortToast(this,"暂无猜价物品！");
+            return;
+        }
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("token",ShareDataTool.getToken(this));
+        rp.addBodyParameter("id",entity.products_id);
+        rp.addBodyParameter("price",ToosUtils.getTextContent(input_price));
+
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "guessPrice", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                pro.setVisibility(View.VISIBLE);
+                super.onStart();
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                Gson gson = new Gson();
+                try {
+                    ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
+                    LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        ToastUtils.displayShortToast(
+                                MainActivity.this, state.result);
+                    } else if(Constant.RETURN_TOKENERROR.equals(state.msg)){
+                        ToastUtils.displayShortToast(
+                                MainActivity.this, state.result);
+                        ToosUtils.goLogin(MainActivity.this);
+                    }else {
+                        ToastUtils.displayShortToast(
+                                MainActivity.this, state.result);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils.displaySendFailureToast(MainActivity.this);
+                }
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displaySendFailureToast(MainActivity.this);
+            }
+        });
+
+
     }
 }

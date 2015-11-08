@@ -8,14 +8,19 @@
 
     <include
         android:id="@+id/main_title"
-        layout="@layout/activity_title" />
+        layout="@layout/activity_title"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_title">
 
     <com.mu.caisheng.view.MyScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="none"
-        android:layout_below="@+id/main_title">
+       >
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -73,7 +78,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="价值："
+                        android:text="价格："
                         android:textColor="#6b6b6b"
                         android:textSize="@dimen/second_font" />
 
@@ -189,5 +194,10 @@
         </RelativeLayout>
 
     </com.mu.caisheng.view.MyScrollView>
+        <include
+            android:id="@+id/main_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
 
 </RelativeLayout>

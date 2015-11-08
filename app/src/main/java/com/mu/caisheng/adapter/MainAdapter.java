@@ -7,7 +7,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
 import com.mu.caisheng.R;
+import com.mu.caisheng.model.GuessEntity;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2015/11/2.
@@ -15,24 +19,28 @@ import com.mu.caisheng.R;
 public class MainAdapter extends BaseAdapter {
 
     private Context context;
+    private List<GuessEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-    public MainAdapter(Context context) {
+    public MainAdapter(Context context,List<GuessEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
     @Override
     public int getCount() {
-        return 10;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,6 +57,10 @@ public class MainAdapter extends BaseAdapter {
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        bitmapUtils.display(viewHolder.image,entities.get(position).products_image);
+        viewHolder.name.setText(entities.get(position).products_name);
+        viewHolder.money.setText("现价:" + entities.get(position).price);
+        viewHolder.num.setText("销量:"+entities.get(position).salenum);
 
         return convertView;
     }

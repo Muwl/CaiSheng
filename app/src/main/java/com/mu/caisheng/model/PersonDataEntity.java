@@ -7,7 +7,7 @@ import java.io.Serializable;
  */
 public class PersonDataEntity implements Serializable {
 
-    public String name;
+    public String username;
 
     public String phone;
 

@@ -25,6 +25,7 @@ import com.mu.caisheng.utils.LogManager;
 import com.mu.caisheng.utils.ShareDataTool;
 import com.mu.caisheng.utils.ToastUtils;
 import com.mu.caisheng.utils.ToosUtils;
+import com.umeng.message.PushAgent;
 
 import org.json.JSONObject;
 
@@ -205,7 +206,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
                 pro.setVisibility(View.VISIBLE);
                 scode = ToosUtils.getTextContent(code);
-                SMSSDK.submitVerificationCode("86", sname, scode);
+                getLogin();
+              //  SMSSDK.submitVerificationCode("86", sname, scode);
 //
 //                Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
 //                startActivity(intent);
@@ -236,6 +238,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LoginEntity entity = gson.fromJson(state.result, LoginEntity.class);
                         ShareDataTool.saveLoginInfo(LoginActivity.this, entity.token, entity.state);
+                        final PushAgent mPushAgent = PushAgent.getInstance(LoginActivity.this);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    mPushAgent.addAlias("18611644286", "phone");
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }                     }
+                        }).start();
                         if (entity.state == 0) {
                             //未完善个人信息
                             Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
