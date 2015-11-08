@@ -222,7 +222,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("phone", sname);
         rp.addBodyParameter("code", scode);
-        rp.addBodyParameter("device_type", "1");
+        rp.addBodyParameter("device_type", "1 ");
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "login", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
