@@ -18,7 +18,7 @@ public class ShareDataTool {
 	 * @param context
 	 * @return
 	 */
-	public static boolean SaveLoginInfo(Context context, String token,int state) {
+	public static boolean saveLoginInfo(Context context, String token,int state) {
 		SharedPreferences sp = context.getSharedPreferences("sp",
 				Context.MODE_PRIVATE);
 		Editor e = sp.edit();

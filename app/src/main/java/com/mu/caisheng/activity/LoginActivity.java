@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.lidroid.xutils.HttpUtils;
 import com.lidroid.xutils.exception.HttpException;
 import com.lidroid.xutils.http.RequestParams;
@@ -17,8 +18,11 @@ import com.lidroid.xutils.http.ResponseInfo;
 import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.mu.caisheng.R;
+import com.mu.caisheng.model.LoginEntity;
+import com.mu.caisheng.model.ReturnState;
 import com.mu.caisheng.utils.Constant;
 import com.mu.caisheng.utils.LogManager;
+import com.mu.caisheng.utils.ShareDataTool;
 import com.mu.caisheng.utils.ToastUtils;
 import com.mu.caisheng.utils.ToosUtils;
 
@@ -210,34 +214,60 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-        private  void getLogin(){
-            HttpUtils utils = new HttpUtils();
-            utils.configTimeout(20000);
-            RequestParams rp=new RequestParams();
-            rp.addBodyParameter("phone",sname);
-            rp.addBodyParameter("code",scode);
-            utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "", rp, new RequestCallBack<String>() {
-                @Override
-                public void onStart() {
-                    super.onStart();
+    private void getLogin() {
+        HttpUtils utils = new HttpUtils();
+        utils.configTimeout(20000);
+        RequestParams rp = new RequestParams();
+        rp.addBodyParameter("phone", sname);
+        rp.addBodyParameter("code", scode);
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "login", rp, new RequestCallBack<String>() {
+            @Override
+            public void onStart() {
+                super.onStart();
+            }
+
+            @Override
+            public void onSuccess(ResponseInfo<String> arg0) {
+                pro.setVisibility(View.GONE);
+                Gson gson = new Gson();
+                try {
+                    ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
+                    LogManager.LogShow("login", state.result, LogManager.ERROR);
+                    if (Constant.RETURN_OK.equals(state.msg)) {
+                        LoginEntity entity = gson.fromJson(state.result, LoginEntity.class);
+                        ShareDataTool.saveLoginInfo(LoginActivity.this, entity.token, entity.state);
+                        if (entity.state == 0) {
+                            //未完善个人信息
+                            Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
+                            intent.putExtra("flag", 0);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            finish();
+                        }
+                    } else {
+                        ToastUtils.displayShortToast(
+                                LoginActivity.this, state.result);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    ToastUtils
+                            .displaySendFailureToast(LoginActivity.this);
                 }
 
-                @Override
-                public void onSuccess(ResponseInfo<String> responseInfo) {
-                    pro.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(HttpException e, String s) {
+                pro.setVisibility(View.GONE);
+                ToastUtils.displaySendFailureToast(LoginActivity.this);
+            }
+        });
 
 
-                }
-
-                @Override
-                public void onFailure(HttpException e, String s) {
-                    pro.setVisibility(View.GONE);
-                    ToastUtils.displaySendFailureToast(LoginActivity.this);
-                }
-            });
-
-
-        }
+    }
 
 
     @Override
