@@ -8,94 +8,112 @@
         android:id="@+id/recode_title"
         layout="@layout/activity_title" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="猜猜次数"
-                android:textColor="#6b6b6b"
-                android:textSize="@dimen/thrid_font" />
 
-            <TextView
-                android:id="@+id/recode_num"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="91"
-                android:textColor="#fe0002"
-                android:textSize="@dimen/second_font" />
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="猜猜次数"
+                        android:textColor="#6b6b6b"
+                        android:textSize="@dimen/thrid_font" />
+
+                    <TextView
+                        android:id="@+id/recode_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="91"
+                        android:textColor="#fe0002"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="中奖率"
+                        android:textColor="#6b6b6b"
+                        android:textSize="@dimen/thrid_font" />
+
+                    <TextView
+                        android:id="@+id/recode_winprob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="72%"
+                        android:textColor="#fe0002"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="最佳成绩"
+                        android:textColor="#6b6b6b"
+                        android:textSize="@dimen/thrid_font" />
+
+                    <TextView
+                        android:id="@+id/recode_winbest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="第1名"
+                        android:textColor="#fe0002"
+                        android:textSize="@dimen/second_font" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="12dp"
+                android:background="@color/divider" />
+
+            <ListView
+                android:id="@+id/recode_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none" />
+
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="中奖率"
-                android:textColor="#6b6b6b"
-                android:textSize="@dimen/thrid_font" />
-
-            <TextView
-                android:id="@+id/recode_winprob"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="72%"
-                android:textColor="#fe0002"
-                android:textSize="@dimen/second_font" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="35dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="最佳成绩"
-                android:textColor="#6b6b6b"
-                android:textSize="@dimen/thrid_font" />
-
-            <TextView
-                android:id="@+id/recode_winbest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="第1名"
-                android:textColor="#fe0002"
-                android:textSize="@dimen/second_font" />
-        </LinearLayout>
-
-
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginTop="12dp"
-        android:background="@color/divider" />
-
-    <ListView
-        android:id="@+id/recode_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none" />
-
+        <include
+            android:id="@+id/recode_pro"
+            layout="@layout/pro"
+            android:visibility="gone" />
+    </RelativeLayout>
 </LinearLayout>

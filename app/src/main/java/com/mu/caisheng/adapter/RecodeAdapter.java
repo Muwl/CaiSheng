@@ -1,5 +1,6 @@
 package com.mu.caisheng.adapter;
 
+import android.app.job.JobInfo;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,7 +8,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.lidroid.xutils.BitmapUtils;
 import com.mu.caisheng.R;
+import com.mu.caisheng.model.RecodeGoodEntity;
+import com.mu.caisheng.utils.TimeUtils;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2015/11/4.
@@ -15,25 +21,29 @@ import com.mu.caisheng.R;
 public class RecodeAdapter extends BaseAdapter {
 
     private Context context;
+    private List<RecodeGoodEntity> entities;
+    private BitmapUtils bitmapUtils;
 
-    public RecodeAdapter(Context context) {
+    public RecodeAdapter(Context context,List<RecodeGoodEntity> entities) {
         this.context = context;
+        this.entities=entities;
+        bitmapUtils=new BitmapUtils(context);
     }
 
 
     @Override
     public int getCount() {
-        return 5;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -51,6 +61,11 @@ public class RecodeAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        bitmapUtils.display(holder.imageView,entities.get(position).products_image);
+        holder.name.setText(entities.get(position).products_name);
+        holder.num.setText("已有" + entities.get(position).salenum + "人出价");
+        holder.time.setText(TimeUtils.getNoticeTime(entities.get(position).events_date));
+        holder.win.setText(entities.get(position).report);
         return convertView;
     }
 
