@@ -206,8 +206,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 }
                 pro.setVisibility(View.VISIBLE);
                 scode = ToosUtils.getTextContent(code);
-                getLogin();
-              //  SMSSDK.submitVerificationCode("86", sname, scode);
+               // getLogin();
+               SMSSDK.submitVerificationCode("86", sname, scode);
 //
 //                Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
 //                startActivity(intent);
@@ -238,7 +238,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     LogManager.LogShow("login", state.result, LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         LoginEntity entity = gson.fromJson(state.result, LoginEntity.class);
-                        ShareDataTool.saveLoginInfo(LoginActivity.this, entity.token, entity.state);
+                        ShareDataTool.saveLoginInfo(LoginActivity.this, entity.token, entity.state,sname);
                         final PushAgent mPushAgent = PushAgent.getInstance(LoginActivity.this);
                         new Thread(new Runnable() {
                             @Override

@@ -19,6 +19,11 @@ public class TimeUtils {
 	public static final SimpleDateFormat DATE_FORMAT_DATE3 = new SimpleDateFormat(
 			"MM-dd");
 
+	public static final SimpleDateFormat DATE_FORMAT_DATE4= new SimpleDateFormat(
+			"M月d日");
+	public static final SimpleDateFormat DATE_FORMAT_DATE5= new SimpleDateFormat(
+			"yyyy/MM/dd HH:mm");
+
 	public static Date getDateByStr(String dd) {
 
 		Date date;
@@ -35,6 +40,24 @@ public class TimeUtils {
 		Date date=new Date();
 		date.setTime(mill * 1000);
 		return  DATE_FORMAT_DATE3.format(date);
+	}
+
+	public static String getNoticeTime(int mill){
+		Date date=new Date();
+		date.setTime(mill * 1000);
+		return  DATE_FORMAT_DATE5.format(date);
+	}
+
+	public static String getNowdate(){
+		Date date=new Date();
+		date.setTime(System.currentTimeMillis());
+		return DATE_FORMAT_DATE4.format(date);
+	}
+
+	public static String getTorwdate(){
+		Date date=new Date();
+		date.setTime(System.currentTimeMillis()+60*60*24*1000);
+		return DATE_FORMAT_DATE4.format(date);
 	}
 
 

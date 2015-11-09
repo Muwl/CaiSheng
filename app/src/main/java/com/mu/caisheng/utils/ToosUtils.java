@@ -77,7 +77,7 @@ public class ToosUtils {
 	}
 
 	public static void goLogin(Context context){
-		ShareDataTool.saveLoginInfo(context,"",0);
+		ShareDataTool.saveLoginInfo(context,"",0,"");
 		Intent intent=new Intent(context, LoginActivity.class);
 		context.startActivity(intent);
 

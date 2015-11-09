@@ -27,6 +27,7 @@ import com.mu.caisheng.utils.Constant;
 import com.mu.caisheng.utils.DensityUtil;
 import com.mu.caisheng.utils.LogManager;
 import com.mu.caisheng.utils.ShareDataTool;
+import com.mu.caisheng.utils.TimeUtils;
 import com.mu.caisheng.utils.ToastUtils;
 import com.mu.caisheng.utils.ToosUtils;
 
@@ -101,6 +102,7 @@ public class TodayadvActivity extends BaseActivity implements View.OnClickListen
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);
         title.setText("今日预告");
+        title_time.setText(TimeUtils.getNowdate());
         torrowadv.setOnClickListener(this);
         adapter = new TodayadvAdapter(this, width,entities,handler);
         gridView.setAdapter(adapter);
@@ -216,7 +218,6 @@ public class TodayadvActivity extends BaseActivity implements View.OnClickListen
             rp.addBodyParameter("flag","1");
         }
 
-
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "favorite", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
@@ -258,7 +259,7 @@ public class TodayadvActivity extends BaseActivity implements View.OnClickListen
             @Override
             public void onFailure(HttpException e, String s) {
                 pro.setVisibility(View.GONE);
-                ToastUtils.displaySendFailureToast(TodayadvActivity.this);
+                ToastUtils.displayFailureToast(TodayadvActivity.this);
             }
         });
     }

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -47,6 +49,8 @@ import com.umeng.message.PushAgent;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.zip.Inflater;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -93,6 +97,37 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private List<GuessEntity> hotEntities;
 
+    private Timer timer;
+
+    private TimerTask task;
+
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case 222:
+                    if (entity!=null){
+                       entity.now=entity.now+1;
+                        time_text.setText(TimeUtils.getCurTime(entity.now,entity.events_date+3600));
+                        if (entity.now<entity.events_date+3600){
+                            guess.setClickable(true);
+                            guess.setEnabled(true);
+                        }else{
+                            if (task != null) {
+                                task.cancel();
+                            }
+                            if (timer != null) {
+                                timer.cancel();
+                            }
+                            guess.setEnabled(false);
+                            guess.setClickable(false);
+                        }
+                    }
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +138,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         bitmapUtils=new BitmapUtils(this);
         hotEntities=new ArrayList<>();
         initView();
-        getGuess();
+
         getHotGoods();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getGuess();
     }
 
     private void initView() {
@@ -172,46 +213,55 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
 
             case R.id.menu_data:
+                menuWindow.dismiss();
                 if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
+                    ToosUtils.goLogin(MainActivity.this);
                     return;
                 }
                 Intent intent1 = new Intent(MainActivity.this, PersonDataActivity.class);
                 intent1.putExtra("flag",1);
                 startActivity(intent1);
-                menuWindow.dismiss();
                 break;
             case R.id.menu_atten:
+                menuWindow.dismiss();
                 if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
+                    ToosUtils.goLogin(MainActivity.this);
                     return;
                 }
                 Intent intent2 = new Intent(MainActivity.this, AttenActivity.class);
                 startActivity(intent2);
-                menuWindow.dismiss();
+
                 break;
             case R.id.menu_info:
+                menuWindow.dismiss();
                 if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
+                    ToosUtils.goLogin(MainActivity.this);
                     return;
                 }
                 Intent intent3 = new Intent(MainActivity.this, InfoActivity.class);
                 startActivity(intent3);
-                menuWindow.dismiss();
+
                 break;
             case R.id.menu_guess:
+                menuWindow.dismiss();
                 if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
+                    ToosUtils.goLogin(MainActivity.this);
                     return;
                 }
                 Intent intent5 = new Intent(MainActivity.this, RecodeActivity.class);
                 startActivity(intent5);
                 menuWindow.dismiss();
+                menuWindow.dismiss();
                 break;
             case R.id.menu_about:
+                menuWindow.dismiss();
                 Intent intent6 = new Intent(MainActivity.this, AboutActivity.class);
                 startActivity(intent6);
-                menuWindow.dismiss();
+
                 break;
 
         }
@@ -287,7 +337,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         if (entity==null){
                             return;
                         }
-                        LogManager.LogShow("====",entity.toString(),LogManager.ERROR);
+                        LogManager.LogShow("====", entity.toString(), LogManager.ERROR);
                         bitmapUtils.display(main_image, entity.products_image);
                         main_image.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -299,6 +349,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 startActivity(intent);
                             }
                         });
+                        if ( timer == null && task == null){
+                            timer = new Timer();
+                            task = new TimerTask() {
+                                @Override
+                                public void run() {
+                                    Message msg = Message.obtain();
+                                    msg.what = 222;
+                                    handler.sendMessage(msg);
+                                }
+                            };
+                            timer.schedule(task, 0, 1000);
+                        }
                         name.setText(entity.products_name);
                         price.setText("$" + entity.price);
                         freeNum.setText(entity.free_num + "份");
@@ -389,6 +451,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
             ToastUtils.displayShortToast(this,"请登录！");
+            ToosUtils.goLogin(MainActivity.this);
             return;
         }
         if(entity==null){
@@ -400,7 +463,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("token",ShareDataTool.getToken(this));
         rp.addBodyParameter("id",entity.products_id);
-        rp.addBodyParameter("price",ToosUtils.getTextContent(input_price));
+        rp.addBodyParameter("price", ToosUtils.getTextContent(input_price));
 
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "guessPrice", rp, new RequestCallBack<String>() {
             @Override
@@ -442,5 +505,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
     }
 }

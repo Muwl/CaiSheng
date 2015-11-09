@@ -71,6 +71,7 @@ public class AttenActivity extends BaseActivity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_atten);
         width = DensityUtil.getScreenWidth(this);
+        entities=new ArrayList<>();
         initView();
         getAttention();
 
@@ -81,6 +82,7 @@ public class AttenActivity extends BaseActivity implements View.OnClickListener 
         back = (ImageView) findViewById(R.id.title_back);
         gridView = (GridView) findViewById(R.id.atten_grid);
         back.setVisibility(View.VISIBLE);
+        pro=findViewById(R.id.atten_pro);
         back.setOnClickListener(this);
         title.setText("我的关注");
         adapter = new TodayadvAdapter(this, width,entities,handler);

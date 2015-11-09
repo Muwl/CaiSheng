@@ -64,7 +64,7 @@ public class TodayadvAdapter extends BaseAdapter {
             holder.name = (TextView) convertView.findViewById(R.id.toadyadv_item_name);
             holder.price = (TextView) convertView.findViewById(R.id.toadyadv_item_price);
             holder.time = (TextView) convertView.findViewById(R.id.toadyadv_item_time);
-            holder.checkBox = (CheckBox) convertView.findViewById(R.id.toadyadv_item_atten);
+            holder.checkBox = (ImageView) convertView.findViewById(R.id.toadyadv_item_atten);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -79,9 +79,11 @@ public class TodayadvAdapter extends BaseAdapter {
         holder.price.setText("$" + entities.get(position).price);
         holder.time.setText(TimeUtils.getMin(entities.get(position).events_date));
         if (entities.get(position).favorite==1){
-            holder.checkBox.setChecked(true);
+            holder.checkBox.setImageResource(R.mipmap.atten_checked);
+           // holder.checkBox.setChecked(true);
         }else{
-            holder.checkBox.setChecked(false);
+            holder.checkBox.setImageResource(R.mipmap.atten_normal);
+           // holder.checkBox.setChecked(false);
         }
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +102,7 @@ public class TodayadvAdapter extends BaseAdapter {
         public TextView name;
         public TextView price;
         public TextView time;
-        public CheckBox checkBox;
+        public ImageView checkBox;
 
     }
 }

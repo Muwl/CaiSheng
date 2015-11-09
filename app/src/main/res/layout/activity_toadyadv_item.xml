@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -26,15 +27,13 @@
             android:textColor="@color/white"
             android:textSize="@dimen/second_font" />
 
-        <CheckBox
+        <ImageView
             android:id="@+id/toadyadv_item_atten"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:background="@drawable/atten_cb"
+            android:src="@mipmap/atten_normal"
             android:button="@null"
-            android:focusable="false"
-            android:enabled="false"
             android:clickable="true"
             android:padding="6dp" />
     </RelativeLayout>

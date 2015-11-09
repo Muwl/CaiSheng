@@ -37,9 +37,9 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
 
     private TextView save;
 
-    private TextView name;
+    private EditText name;
 
-    private EditText phone;
+    private TextView phone;
 
     private EditText address;
 
@@ -62,8 +62,8 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         title = (TextView) findViewById(R.id.title_text);
         back = (ImageView) findViewById(R.id.title_back);
         save = (TextView) findViewById(R.id.title_save);
-        name = (TextView) findViewById(R.id.data_name);
-        phone = (EditText) findViewById(data_phone);
+        name = (EditText) findViewById(R.id.data_name);
+        phone = (TextView) findViewById(data_phone);
         address = (EditText) findViewById(R.id.data_address);
         pro = findViewById(R.id.data_pro);
         title.setText("个人资料");
@@ -71,6 +71,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
         back.setVisibility(View.VISIBLE);
         save.setOnClickListener(this);
         save.setVisibility(View.VISIBLE);
+        phone.setText(ShareDataTool.getPhone(this));
     }
 
     @Override
@@ -118,9 +119,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                         if (!ToosUtils.isStringEmpty(entity.username)) {
                             name.setText(entity.username);
                         }
-                        if (!ToosUtils.isStringEmpty(entity.phone)) {
-                            phone.setText(entity.phone);
-                        }
+
                         if (!ToosUtils.isStringEmpty(entity.address)) {
                             address.setText(entity.address);
                         }

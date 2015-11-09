@@ -7,8 +7,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.mu.caisheng.R;
+import com.mu.caisheng.model.InfoEntity;
+import com.mu.caisheng.utils.TimeUtils;
+import com.mu.caisheng.utils.ToosUtils;
 
 import org.w3c.dom.Text;
+
+import java.util.List;
 
 /**
  * Created by Mu on 2015/11/3.
@@ -16,25 +21,27 @@ import org.w3c.dom.Text;
 public class InfoAdapter extends BaseAdapter {
 
     private Context context;
+    private List<InfoEntity> entities;
 
-    public InfoAdapter(Context context) {
+    public InfoAdapter(Context context,List<InfoEntity> entities) {
         this.context = context;
+        this.entities=entities;
     }
 
 
     @Override
     public int getCount() {
-        return 8;
+        return entities.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return entities.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -50,6 +57,9 @@ public class InfoAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        holder.tip.setText(entities.get(position).title);
+        holder.time.setText(TimeUtils.getNoticeTime(entities.get(position).time));
+        holder.content.setText(entities.get(position).content);
         return convertView;
     }
 

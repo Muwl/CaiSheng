@@ -27,6 +27,7 @@ import com.mu.caisheng.utils.Constant;
 import com.mu.caisheng.utils.DensityUtil;
 import com.mu.caisheng.utils.LogManager;
 import com.mu.caisheng.utils.ShareDataTool;
+import com.mu.caisheng.utils.TimeUtils;
 import com.mu.caisheng.utils.ToastUtils;
 import com.mu.caisheng.utils.ToosUtils;
 
@@ -97,6 +98,7 @@ public class TorrowActivity extends BaseActivity implements View.OnClickListener
         back.setVisibility(View.VISIBLE);
         back.setOnClickListener(this);
         title.setText("明日预告");
+        title_time.setText(TimeUtils.getTorwdate());
         torrowadv.setVisibility(View.GONE);
         adapter = new TodayadvAdapter(this, width,entities,handler);
         gridView.setAdapter(adapter);
