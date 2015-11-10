@@ -63,7 +63,7 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
 
     private WinEntity entity;
 
-    private int id;
+    private String id;
 
     private BitmapUtils bitmapUtils;
 
@@ -71,10 +71,12 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win);
-        id=getIntent().getIntExtra("id",0);
+        id=getIntent().getStringExtra("id");
         bitmapUtils=new BitmapUtils(this);
         initView();
         getWin();
+
+        LogManager.LogShow("----",id+"---",LogManager.ERROR);
     }
 
     private void initView() {

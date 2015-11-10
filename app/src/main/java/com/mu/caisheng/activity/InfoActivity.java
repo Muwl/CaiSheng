@@ -73,7 +73,7 @@ public class InfoActivity extends BaseActivity implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (entities.get(position).type==100){
                     Intent intent = new Intent(InfoActivity.this, WinActivity.class);
-                    intent.putExtra("id",2);
+                    intent.putExtra("id",entities.get(position).id+"");
                     startActivity(intent);
               }
 
