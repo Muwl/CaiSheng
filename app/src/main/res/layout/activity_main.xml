@@ -150,6 +150,7 @@
                         android:background="@drawable/price_bg"
                         android:gravity="center"
                         android:hint="填写价格"
+                        android:inputType="numberDecimal"
                         android:padding="10dp"
                         android:textColor="#6b6b6b"
                         android:textColorHint="#969696"
