@@ -12,7 +12,7 @@ public class RecodeEntity implements Serializable{
 
     public String win_rate;//中奖率
 
-    public int win_best;//最佳成绩
+    public String win_best;//最佳成绩
 
     public List<RecodeGoodEntity> products_list;//列表数据
 

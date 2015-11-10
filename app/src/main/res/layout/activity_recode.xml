@@ -42,7 +42,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="91"
                         android:textColor="#fe0002"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
@@ -65,7 +64,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="72%"
                         android:textColor="#fe0002"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>
@@ -88,7 +86,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="第1名"
                         android:textColor="#fe0002"
                         android:textSize="@dimen/second_font" />
                 </LinearLayout>

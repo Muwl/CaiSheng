@@ -234,6 +234,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 pro.setVisibility(View.GONE);
                 Gson gson = new Gson();
                 try {
+                    LogManager.LogShow("login", arg0.result, LogManager.ERROR);
                     ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
                     LogManager.LogShow("login", state.result, LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
@@ -249,6 +250,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                                     e.printStackTrace();
                                 }                     }
                         }).start();
+                        ToastUtils.displayShortToast(
+                                LoginActivity.this, "登陆成功");
                         if (entity.state == 0) {
                             //未完善个人信息
                             Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
@@ -258,6 +261,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         } else {
                             finish();
                         }
+
                     } else {
                         ToastUtils.displayShortToast(
                                 LoginActivity.this, state.result);

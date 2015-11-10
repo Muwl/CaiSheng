@@ -105,7 +105,7 @@ public class RecodeActivity extends BaseActivity implements View.OnClickListener
         RequestParams rp = new RequestParams();
         rp.addBodyParameter("token", ShareDataTool.getToken(this));
         LogManager.LogShow("token--------", ShareDataTool.getToken(this), LogManager.ERROR);
-        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "recode", rp, new RequestCallBack<String>() {
+        utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "record", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);
@@ -124,7 +124,7 @@ public class RecodeActivity extends BaseActivity implements View.OnClickListener
                             return;
                         }
                         RecodeEntity entity = gson.fromJson(state.result, RecodeEntity.class);
-                        num.setText(entity.guessnum);
+                        num.setText(entity.guessnum+"");
                         prol.setText(entity.win_rate);
                         winBest.setText(entity.win_best);
                         entities.clear();
