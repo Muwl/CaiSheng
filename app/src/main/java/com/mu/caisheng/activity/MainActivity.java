@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +34,7 @@ import com.lidroid.xutils.http.callback.RequestCallBack;
 import com.lidroid.xutils.http.client.HttpRequest;
 import com.mu.caisheng.R;
 import com.mu.caisheng.adapter.MainAdapter;
+import com.mu.caisheng.dialog.CustomeDialog;
 import com.mu.caisheng.model.GuessEntity;
 import com.mu.caisheng.model.PersonDataEntity;
 import com.mu.caisheng.model.ReturnState;
@@ -39,12 +42,15 @@ import com.mu.caisheng.utils.Constant;
 import com.mu.caisheng.utils.DensityUtil;
 import com.mu.caisheng.utils.LogManager;
 import com.mu.caisheng.utils.ShareDataTool;
+import com.mu.caisheng.utils.ShareUtils;
 import com.mu.caisheng.utils.TimeUtils;
 import com.mu.caisheng.utils.ToastUtils;
 import com.mu.caisheng.utils.ToosUtils;
 import com.mu.caisheng.view.HorizontalListView;
 import com.umeng.message.ALIAS_TYPE;
 import com.umeng.message.PushAgent;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.sso.UMSsoHandler;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -101,18 +107,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private TimerTask task;
 
-    private Handler handler=new Handler(){
+    private UMSocialService mController;
+
+    private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            switch (msg.what){
+            switch (msg.what) {
+                case 40:
+                    mController = ShareUtils.Share(MainActivity.this, "我赢的了这款商品", entity.products_image, entity.products_url);
+                    break;
                 case 222:
-                    if (entity!=null){
-                       entity.now=entity.now+1;
-                        time_text.setText(TimeUtils.getCurTime(entity.now,entity.events_date+3600));
-                        if (entity.now<entity.events_date+3600){
+                    if (entity != null) {
+                        entity.now = entity.now + 1;
+                        time_text.setText(TimeUtils.getCurTime(entity.now, entity.events_date + 3600));
+                        if (entity.now < entity.events_date + 3600) {
                             guess.setClickable(true);
                             guess.setEnabled(true);
-                        }else{
+                        } else {
                             if (task != null) {
                                 task.cancel();
                             }
@@ -135,8 +146,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mPushAgent.enable();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bitmapUtils=new BitmapUtils(this);
-        hotEntities=new ArrayList<>();
+        bitmapUtils = new BitmapUtils(this);
+        hotEntities = new ArrayList<>();
         initView();
 
         getHotGoods();
@@ -146,6 +157,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         getGuess();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (mController != null) {
+            /** 使用SSO授权必须添加如下代码 */
+            UMSsoHandler ssoHandler = mController.getConfig().getSsoHandler(
+                    requestCode);
+            if (ssoHandler != null) {
+                ssoHandler.authorizeCallBack(requestCode, resultCode, data);
+            }
+        }
+
     }
 
     private void initView() {
@@ -163,7 +188,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         guess = (TextView) findViewById(R.id.main_guess);
         comNum = (TextView) findViewById(R.id.main_comnum);
         listView = (HorizontalListView) findViewById(R.id.main_list);
-        pro=findViewById(R.id.main_pro);
+        pro = findViewById(R.id.main_pro);
 
         title_lef.setVisibility(View.VISIBLE);
         title_rig.setVisibility(View.VISIBLE);
@@ -172,7 +197,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         guess.setOnClickListener(this);
         title.setText("财神到");
         text1.setText(Html.fromHtml("至<font color=\"#d02c06\">详情页</font>寻找<font color=\"#d02c06\">参考价区间</font>提高中奖率"));
-        adapter = new MainAdapter(this,hotEntities);
+        adapter = new MainAdapter(this, hotEntities);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -185,8 +210,57 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(intent);
             }
         });
+        setPricePoint(input_price);
+}
+
+
+    public static void setPricePoint(final EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > 2) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + 3);
+                        editText.setText(s);
+                        editText.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    editText.setText(s);
+                    editText.setSelection(2);
+                }
+
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        editText.setText(s.subSequence(0, 1));
+                        editText.setSelection(1);
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+
+            }
+
+        });
+
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -482,6 +556,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);
+                        CustomeDialog dialog=new CustomeDialog(MainActivity.this,handler);
                     } else if(Constant.RETURN_TOKENERROR.equals(state.msg)){
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);

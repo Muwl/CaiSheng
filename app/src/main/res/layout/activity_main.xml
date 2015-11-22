@@ -52,7 +52,7 @@
                         android:paddingLeft="10dp"
                         android:paddingRight="10dp"
                         android:paddingTop="4dp"
-                        android:text="剩余时间：56:44秒"
+                        android:text="剩余时间："
                         android:textColor="@color/white"
                         android:textSize="@dimen/second_font" />
 
@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="品名"
+                    android:text=""
                     android:textColor="#040404"
                     android:textSize="@dimen/second_font" />
 
@@ -86,7 +86,7 @@
                         android:id="@+id/main_money"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="$5"
+                        android:text=""
                         android:textColor="#d02c06"
                         android:textSize="@dimen/second_font" />
 
@@ -102,7 +102,7 @@
                         android:id="@+id/main_freenum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="50份"
+                        android:text=""
                         android:textColor="#d02c06"
                         android:textSize="@dimen/first_font" />
 
@@ -162,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:text="已有308人出价"
+                    android:text="已有人出价"
                     android:textColor="#6b6b6b"
                     android:textSize="@dimen/second_font" />
 

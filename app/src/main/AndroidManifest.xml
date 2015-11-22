@@ -104,10 +104,10 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5639977a67e58e5f7100003e"></meta-data>
+            android:value="56518c5467e58e8aee008579"></meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="ec21a292b2a19846c22293606ccf95c2"></meta-data>
+            android:value="8253f3bdde75fdd7e5b248326e5d6015"></meta-data>
 
         <!-- 监听通知点击或者忽略处理的广播 -->
         <receiver

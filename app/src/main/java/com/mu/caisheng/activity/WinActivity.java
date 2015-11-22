@@ -104,7 +104,7 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.win_share:
-                mController = ShareUtils.Share(WinActivity.this, "测试一下", "", null);
+                mController = ShareUtils.Share(WinActivity.this, "我赢的了这款商品", entity.products_image, entity.products_url);
                 break;
             case R.id.win_close:
                 finish();

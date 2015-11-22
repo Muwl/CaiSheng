@@ -34,50 +34,38 @@ public class WelcomeActivity extends BaseActivity{
 
         image= (ImageView) findViewById(R.id.welcome_image);
 
-        mFadeIn = AnimationUtils.loadAnimation(this,
-                R.anim.guide_welcome_fade_in);
-        mFadeInScale = AnimationUtils.loadAnimation(this,
-                R.anim.guide_welcome_fade_in_scale);
-        mFadeOut = AnimationUtils.loadAnimation(this,
-                R.anim.guide_welcome_fade_out);
+        new Thread(new Runnable() {
 
-        image.startAnimation(mFadeIn);
-        mFadeIn.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation animation) {
-            }
+            @Override
+            public void run() {
 
-            public void onAnimationRepeat(Animation animation) {
-            }
+                    try {
+                        Thread.sleep(2000);
+                        go();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
 
-            public void onAnimationEnd(Animation animation) {
-                image.startAnimation(mFadeInScale);
-            }
-        });
-        mFadeInScale.setAnimationListener(new Animation.AnimationListener() {
-            public void onAnimationStart(Animation animation) {
-            }
-
-            public void onAnimationRepeat(Animation animation) {
-            }
-
-            public void onAnimationEnd(Animation animation) {
-                if (ShareDataTool.getStart(WelcomeActivity.this) == 0) {
-                    Intent intent = new Intent(WelcomeActivity.this,
-                            SplashActivity.class);
-                    startActivity(intent);
-
-                    WelcomeActivity.this.finish();
-                } else {
-                    Intent intent = new Intent(WelcomeActivity.this,
-                            MainActivity.class);
-                    startActivity(intent);
-                    WelcomeActivity.this.finish();
-                }
-                // image.startAnimation(mFadeOut);
 
             }
-            // }
-        });
+        }).start();
+
+
+    }
+
+    private void go() {
+        if (ShareDataTool.getStart(WelcomeActivity.this) == 0) {
+            Intent intent = new Intent(WelcomeActivity.this,
+                    SplashActivity.class);
+            startActivity(intent);
+
+            WelcomeActivity.this.finish();
+        } else {
+            Intent intent = new Intent(WelcomeActivity.this,
+                    MainActivity.class);
+            startActivity(intent);
+            WelcomeActivity.this.finish();
+        }
 
     }
 }

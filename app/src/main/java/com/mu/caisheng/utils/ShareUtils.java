@@ -66,13 +66,13 @@ public class ShareUtils {
 
         // 参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler((Activity) context,
-                "1104681870", "jPvg66Urn0QSyBGw");
+                "1104908839", "LM1MtvNLstcGppUa");
         qqSsoHandler.setTargetUrl(url);
         qqSsoHandler.addToSocialSDK();
 
         // 参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(
-                (Activity) context, "1104681870", "jPvg66Urn0QSyBGw");
+                (Activity) context, "1104908839", "LM1MtvNLstcGppUa");
         if (!ToosUtils.isStringEmpty(url)) {
             qZoneSsoHandler.setTargetUrl(url);
         }

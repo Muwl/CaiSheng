@@ -94,7 +94,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         initView();
         initSDK();
-        time = new TimeCount(60000, 1000);
+        time = new TimeCount(80000, 1000);
     }
 
     private void initSDK() {
