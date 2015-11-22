@@ -3,6 +3,7 @@
     android:layout_width="120dp"
     android:layout_height="150dp"
     android:orientation="vertical"
+    android:background="@color/transparent"
     android:padding="8dp">
 
     <ImageView
@@ -19,7 +20,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="6dp"
         android:text="品名"
-        android:textColor="#6b6b6b"
+        android:textColor="#d7d5d5"
         android:textSize="11sp" />
 
     <LinearLayout
@@ -35,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="现价:35"
-            android:textColor="#6b6b6b"
+            android:textColor="#d7d5d5"
             android:textSize="11sp" />
 
         <TextView
@@ -43,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="销量:35"
-            android:textColor="#6b6b6b"
+            android:textColor="#d7d5d5"
             android:textSize="11sp" />
 
 

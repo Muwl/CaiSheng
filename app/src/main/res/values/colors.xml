@@ -21,6 +21,7 @@
 
     <color name="getcode_normal">#c3937d</color>
     <color name="getcode_press">#9c7f72</color>
+    <color name="title_root">#3d434f</color>
 
 
 </resources>

@@ -109,6 +109,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private UMSocialService mController;
 
+    private View titleRoot;
+
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -189,14 +191,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         comNum = (TextView) findViewById(R.id.main_comnum);
         listView = (HorizontalListView) findViewById(R.id.main_list);
         pro = findViewById(R.id.main_pro);
+        titleRoot = tit.findViewById(R.id.title_root);
 
         title_lef.setVisibility(View.VISIBLE);
         title_rig.setVisibility(View.VISIBLE);
+        titleRoot.setBackgroundResource(R.color.title_root);
         title_lef.setOnClickListener(this);
         title_rig.setOnClickListener(this);
         guess.setOnClickListener(this);
-        title.setText("财神到");
-        text1.setText(Html.fromHtml("至<font color=\"#d02c06\">详情页</font>寻找<font color=\"#d02c06\">参考价区间</font>提高中奖率"));
+        title.setText("猜神到");
+        text1.setText(Html.fromHtml("至<font color=\"#f7dc1d\">详情页</font>寻找<font color=\"#f7dc1d\">参考价区间</font>提高中奖率"));
         adapter = new MainAdapter(this, hotEntities);
         listView.setAdapter(adapter);
 
@@ -211,7 +215,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         setPricePoint(input_price);
-}
+    }
 
 
     public static void setPricePoint(final EditText editText) {
@@ -288,18 +292,18 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
             case R.id.menu_data:
                 menuWindow.dismiss();
-                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
                     ToosUtils.goLogin(MainActivity.this);
                     return;
                 }
                 Intent intent1 = new Intent(MainActivity.this, PersonDataActivity.class);
-                intent1.putExtra("flag",1);
+                intent1.putExtra("flag", 1);
                 startActivity(intent1);
                 break;
             case R.id.menu_atten:
                 menuWindow.dismiss();
-                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
                     ToosUtils.goLogin(MainActivity.this);
                     return;
@@ -310,7 +314,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.menu_info:
                 menuWindow.dismiss();
-                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
                     ToosUtils.goLogin(MainActivity.this);
                     return;
@@ -321,7 +325,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.menu_guess:
                 menuWindow.dismiss();
-                if(ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+                if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
                     ToastUtils.displayShortToast(this, "请登录");
                     ToosUtils.goLogin(MainActivity.this);
                     return;
@@ -404,11 +408,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
                     LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        if (ToosUtils.isStringEmpty(state.result)){
+                        if (ToosUtils.isStringEmpty(state.result) && "[]".equals(state.result)) {
                             return;
                         }
-                        entity=gson.fromJson(state.result,GuessEntity.class);
-                        if (entity==null){
+                        entity = gson.fromJson(state.result, GuessEntity.class);
+                        if (entity == null) {
                             return;
                         }
                         LogManager.LogShow("====", entity.toString(), LogManager.ERROR);
@@ -423,7 +427,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 startActivity(intent);
                             }
                         });
-                        if ( timer == null && task == null){
+                        if (timer == null && task == null) {
                             timer = new Timer();
                             task = new TimerTask() {
                                 @Override
@@ -438,8 +442,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         name.setText(entity.products_name);
                         price.setText("$" + entity.price);
                         freeNum.setText(entity.free_num + "份");
-                        comNum.setText(Html.fromHtml("已有<font color=\"#d02c06\">"+entity.bidnum+"</font>人出价"));
-                        time_text.setText(TimeUtils.getCurTime(entity.now,entity.events_date+3600));
+                        comNum.setText(Html.fromHtml("已有<font color=\"#f7dc1d\">" + entity.bidnum + "</font>人出价"));
+                        time_text.setText(TimeUtils.getCurTime(entity.now, entity.events_date + 3600));
                     } else {
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);
@@ -447,7 +451,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    ToastUtils.displaySendFailureToast(MainActivity.this);
+
                 }
             }
 
@@ -481,15 +485,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
                     LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        if (ToosUtils.isStringEmpty(state.result)){
+                        if (ToosUtils.isStringEmpty(state.result)) {
                             return;
                         }
-                        Type type = new TypeToken<ArrayList<GuessEntity>>() {}.getType();
-                        List<GuessEntity> list=gson.fromJson(state.result, type);
-                        if (list==null){
-                            list=new ArrayList<GuessEntity>();
+                        Type type = new TypeToken<ArrayList<GuessEntity>>() {
+                        }.getType();
+                        List<GuessEntity> list = gson.fromJson(state.result, type);
+                        if (list == null) {
+                            list = new ArrayList<GuessEntity>();
                         }
-                        for (int i=0;i<list.size();i++){
+                        for (int i = 0; i < list.size(); i++) {
                             hotEntities.add(list.get(i));
                         }
                         adapter.notifyDataSetChanged();
@@ -514,29 +519,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-
     /**
      * 提交猜价
      */
     private void subGuess() {
-        if (ToosUtils.isTextEmpty(input_price)){
-            ToastUtils.displayShortToast(this,"请填写猜价的价格！");
+        if (ToosUtils.isTextEmpty(input_price)) {
+            ToastUtils.displayShortToast(this, "请填写猜价的价格！");
             return;
         }
-        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))){
-            ToastUtils.displayShortToast(this,"请登录！");
+        if (ToosUtils.isStringEmpty(ShareDataTool.getToken(this))) {
+            ToastUtils.displayShortToast(this, "请登录！");
             ToosUtils.goLogin(MainActivity.this);
             return;
         }
-        if(entity==null){
-            ToastUtils.displayShortToast(this,"暂无猜价物品！");
+        if (entity == null) {
+            ToastUtils.displayShortToast(this, "暂无猜价物品！");
             return;
         }
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         RequestParams rp = new RequestParams();
-        rp.addBodyParameter("token",ShareDataTool.getToken(this));
-        rp.addBodyParameter("id",entity.products_id);
+        rp.addBodyParameter("token", ShareDataTool.getToken(this));
+        rp.addBodyParameter("id", entity.products_id);
         rp.addBodyParameter("price", ToosUtils.getTextContent(input_price));
 
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "guessPrice", rp, new RequestCallBack<String>() {
@@ -556,12 +560,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);
-                        CustomeDialog dialog=new CustomeDialog(MainActivity.this,handler);
-                    } else if(Constant.RETURN_TOKENERROR.equals(state.msg)){
+                        CustomeDialog dialog = new CustomeDialog(MainActivity.this, handler);
+                    } else if (Constant.RETURN_TOKENERROR.equals(state.msg)) {
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);
                         ToosUtils.goLogin(MainActivity.this);
-                    }else {
+                    } else {
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);
                     }
