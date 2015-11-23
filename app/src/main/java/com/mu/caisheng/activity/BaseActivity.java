@@ -30,6 +30,10 @@ public class BaseActivity extends FragmentActivity {
 
 	}
 
+	public  void onrefush(){
+
+	}
+
 	protected void onResume() {
 		super.onResume();
 	}

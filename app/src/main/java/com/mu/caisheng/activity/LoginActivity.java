@@ -252,15 +252,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                         }).start();
                         ToastUtils.displayShortToast(
                                 LoginActivity.this, "登陆成功");
-                        if (entity.state == 0) {
-                            //未完善个人信息
-                            Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
-                            intent.putExtra("flag", 0);
-                            startActivity(intent);
+//                        if (entity.state == 0) {
+//                            //未完善个人信息
+//                            Intent intent = new Intent(LoginActivity.this, PersonDataActivity.class);
+//                            intent.putExtra("flag", 0);
+//                            startActivity(intent);
+//                            finish();
+//                        } else {
                             finish();
-                        } else {
-                            finish();
-                        }
+//                        }
 
                     } else {
                         ToastUtils.displayShortToast(

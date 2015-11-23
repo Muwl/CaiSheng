@@ -420,11 +420,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         main_image.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent intent = new Intent();
-                                intent.setAction("android.intent.action.VIEW");
-                                Uri content_url = Uri.parse(entity.products_url);
-                                intent.setData(content_url);
-                                startActivity(intent);
+                                if (ToosUtils.isStringEmpty(entity.products_url)){
+                                    return;
+                                }
+                                try{
+                                    Intent intent = new Intent();
+                                    intent.setAction("android.intent.action.VIEW");
+                                    Uri content_url = Uri.parse(entity.products_url);
+                                    intent.setData(content_url);
+                                    startActivity(intent);
+                                }catch (Exception e){
+                                    e.printStackTrace();
+                                }
+
+
+
                             }
                         });
                         if (timer == null && task == null) {
