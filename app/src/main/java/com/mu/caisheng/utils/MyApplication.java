@@ -108,16 +108,16 @@ public class MyApplication extends Application {
 			@Override
 			public void run() {
 				while (true){
-
-					if ((!isApplicationBroughtToBackground()) && !ToosUtils.isStringEmpty(ShareDataTool.getToken(applicationContext)) && (ShareDataTool.getState(applicationContext)==0)) {
-						getState();
-					}
-
 					try {
 						Thread.sleep(10000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
+					if ((!isApplicationBroughtToBackground()) && !ToosUtils.isStringEmpty(ShareDataTool.getToken(applicationContext)) && (ShareDataTool.getState(applicationContext)==0)) {
+						getState();
+					}
+
+
 
 				}
 
@@ -159,13 +159,13 @@ public class MyApplication extends Application {
 						List<RunningTaskInfo> tasks = am.getRunningTasks(1);
 						if (!tasks.isEmpty()) {
 							ComponentName topActivity = tasks.get(0).topActivity;
-							LogManager.LogShow("token--------", topActivity.getClassName()+"好了。。。。。", LogManager.ERROR);
+							//LogManager.LogShow("token--------", topActivity.getClassName()+"好了。。。。。", LogManager.ERROR);
 							for (int i = 0; i < list.size(); i++) {
 								if (list.get(i) != null
 										&& !list.get(i).getClass()
 										.equals(PersonDataActivity.class) && list.get(i).getClass().getName().equals(topActivity.getClassName())){
-									LogManager.LogShow("token--------", list.get(i).getClass()+"好了。。。。。", LogManager.ERROR);
-									LogManager.LogShow("token--------", "好了。。。。。", LogManager.ERROR);
+								//	LogManager.LogShow("token--------", list.get(i).getClass()+"好了。。。。。", LogManager.ERROR);
+									//LogManager.LogShow("token--------", "好了。。。。。", LogManager.ERROR);
 
 									if (dialog==null || !dialog.isShowing() || !list.get(i).getClass().getName().equals(curAcName)){
 										curAcName=list.get(i).getClass().getName();
