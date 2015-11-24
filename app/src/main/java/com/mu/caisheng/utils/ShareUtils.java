@@ -46,8 +46,8 @@ public class ShareUtils {
         }
 
         // 微信
-        String appID = "wx9aedcf11f8489ab6";
-        String appSecret = "211e9d4b803b3098fa53418798cbe8f2";
+        String appID = "wxb9e65e2f4a6e0ee6";
+        String appSecret = "d4624c36b6795d1d99dcf0547af5443d";
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(context, appID, appSecret);
         wxHandler.showCompressToast(false);
