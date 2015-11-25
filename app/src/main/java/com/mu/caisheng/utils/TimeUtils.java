@@ -36,13 +36,13 @@ public class TimeUtils {
 		return date;
 	}
 
-	public static String getMin(int mill){
+	public static String getMin(long mill){
 		Date date=new Date();
 		date.setTime(mill * 1000);
 		return  DATE_FORMAT_DATE3.format(date);
 	}
 
-	public static String getNoticeTime(int mill){
+	public static String getNoticeTime(long mill){
 		Date date=new Date();
 		date.setTime(mill * 1000);
 		return  DATE_FORMAT_DATE5.format(date);

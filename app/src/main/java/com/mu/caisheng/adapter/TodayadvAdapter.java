@@ -16,7 +16,9 @@ import com.lidroid.xutils.BitmapUtils;
 import com.mu.caisheng.R;
 import com.mu.caisheng.model.GuessEntity;
 import com.mu.caisheng.utils.DensityUtil;
+import com.mu.caisheng.utils.LogManager;
 import com.mu.caisheng.utils.TimeUtils;
+import com.mu.caisheng.utils.ToosUtils;
 
 import java.util.List;
 
@@ -78,6 +80,7 @@ public class TodayadvAdapter extends BaseAdapter {
         holder.name.setText(entities.get(position).products_name);
         holder.price.setText("$" + entities.get(position).price);
         holder.time.setText(TimeUtils.getMin(entities.get(position).events_date));
+
         if (entities.get(position).favorite==1){
             holder.checkBox.setImageResource(R.mipmap.atten_checked);
            // holder.checkBox.setChecked(true);
@@ -85,6 +88,7 @@ public class TodayadvAdapter extends BaseAdapter {
             holder.checkBox.setImageResource(R.mipmap.atten_normal);
            // holder.checkBox.setChecked(false);
         }
+
         holder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
