@@ -55,7 +55,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1265525421"
+                android:text="345802569"
                 android:textColor="#6b6b6b"
                 android:textSize="@dimen/second_font" />
 
@@ -93,6 +93,12 @@
                 android:layout_weight="1"
                 android:text="关注微信"
                 android:textColor="#d05627"
+                android:textSize="@dimen/second_font" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="iamcaishen"
+                android:textColor="#6b6b6b"
                 android:textSize="@dimen/second_font" />
 
 

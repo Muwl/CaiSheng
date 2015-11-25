@@ -1,6 +1,11 @@
 package com.mu.caisheng.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -76,8 +81,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         sina.setOnClickListener(this);
         web.setOnClickListener(this);
         apply.setOnClickListener(this);
+        com.umeng.socialize.utils.Log.LOG = true;
+
     }
 
+    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -89,6 +97,10 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
             case R.id.about_weixin:
                 break;
             case R.id.about_phone:
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                Uri data = Uri.parse("tel:" + "010-62522870");
+                intent.setData(data);
+                startActivity(intent);
                 break;
             case R.id.about_sina:
                 guanzhuWeibo();
@@ -135,9 +147,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
     }
 
     private void follow() {
+      //  mController.getConfig().addFollow(SHARE_MEDIA.SINA,"5750113827");
         mController.follow(this, SHARE_MEDIA.SINA, new SocializeListeners.MulStatusListener() {
             @Override
             public void onStart() {
+               // ToastUtils.displayShortToast(AboutActivity.this,"----------------开始分析");
             }
 
             @Override
@@ -146,9 +160,11 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
                 if (st == 200) {
                     // 关注成功
                     Toast.makeText(AboutActivity.this, "关注成功", Toast.LENGTH_SHORT).show();
+                }else {
+                   //ToastUtils.displayShortToast(AboutActivity.this,multiStatus.toString());
                 }
             }
-        },new String[] { "1950493802" });//此处为想要关注的微博的uid
+        },new String[] {"5750113827"});//此处为想要关注的微博的uid
     }
 
     @Override
