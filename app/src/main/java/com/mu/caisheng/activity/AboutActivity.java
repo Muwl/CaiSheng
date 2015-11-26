@@ -84,8 +84,6 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
         com.umeng.socialize.utils.Log.LOG = true;
 
     }
-
-    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
