@@ -107,8 +107,18 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
                 break;
             case R.id.about_web:
+                Intent intent2 = new Intent();
+                intent2.setAction("android.intent.action.VIEW");
+                Uri content_url = Uri.parse("http://101.200.192.147");
+                intent2.setData(content_url);
+                startActivity(intent2);
                 break;
             case R.id.about_apply:
+                Intent intent3 = new Intent();
+                intent3.setAction("android.intent.action.VIEW");
+                Uri content_url2= Uri.parse("http://101.200.192.147/merchant/login");
+                intent3.setData(content_url2);
+                startActivity(intent3);
                 break;
         }
     }
