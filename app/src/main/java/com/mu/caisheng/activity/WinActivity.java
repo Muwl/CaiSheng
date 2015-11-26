@@ -104,7 +104,7 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.win_share:
-                mController = ShareUtils.Share(WinActivity.this, "我赢的了这款商品", entity.products_image, entity.products_url);
+                mController = ShareUtils.Share(WinActivity.this, "我在【猜神到】免费赢得了"+entity.products_name+"大奖。快来一起加入全球最火热的电商猜价游戏吧，赢取每整点时段的时尚大奖，从此当上大猜神，迎娶白富美，走上人生的巅峰！我在猜神到，等你来战！！！APP下载地址：xxxx", entity.products_image, entity.products_url);
                 break;
             case R.id.win_close:
                 finish();

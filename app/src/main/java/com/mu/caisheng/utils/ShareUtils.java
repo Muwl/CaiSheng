@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 
+import com.mu.caisheng.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.bean.SocializeEntity;
 import com.umeng.socialize.controller.UMServiceFactory;
@@ -35,15 +36,16 @@ public class ShareUtils {
         // 设置分享内容
         mController.setShareContent(content);
         // 设置分享图片, 参数2为图片的url地址
-
-        if (!ToosUtils.isStringEmpty(imageUrl)) {
-            if (imageUrl.contains("http://")) {
-                mController.setShareMedia(new UMImage(context, imageUrl));
-            } else {
-                mController.setShareMedia(new UMImage(context, BitmapFactory
-                        .decodeFile(imageUrl)));
-            }
-        }
+        mController.setShareMedia(new UMImage(context, BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher)));
+//
+//        if (!ToosUtils.isStringEmpty(imageUrl)) {
+//            if (imageUrl.contains("http://")) {
+//                mController.setShareMedia(new UMImage(context, imageUrl));
+//            } else {
+//                mController.setShareMedia(new UMImage(context, BitmapFactory
+//                        .decodeFile(imageUrl)));
+//            }
+//        }
 
         // 微信
         String appID = "wxb9e65e2f4a6e0ee6";
