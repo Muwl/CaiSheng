@@ -100,7 +100,7 @@ public class TorrowActivity extends BaseActivity implements View.OnClickListener
         title.setText("明日预告");
         title_time.setText(TimeUtils.getTorwdate());
         torrowadv.setVisibility(View.GONE);
-        adapter = new TodayadvAdapter(this, width,entities,handler);
+        adapter = new TodayadvAdapter(this, width,entities,handler,1);
         gridView.setAdapter(adapter);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

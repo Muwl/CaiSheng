@@ -32,12 +32,14 @@ public class TodayadvAdapter extends BaseAdapter {
     private List<GuessEntity> entities;
     private Handler handler;
     private BitmapUtils bitmapUtils;
+    private int flag;
 
-    public TodayadvAdapter(Context context, int width,List<GuessEntity> entities,Handler handler) {
+    public TodayadvAdapter(Context context, int width,List<GuessEntity> entities,Handler handler,int flag) {
         this.context = context;
         this.width = width;
         this.entities=entities;
         this.handler=handler;
+        this.flag=flag;
         bitmapUtils=new BitmapUtils(context);
     }
 
@@ -79,7 +81,12 @@ public class TodayadvAdapter extends BaseAdapter {
         bitmapUtils.display(holder.imageView, entities.get(position).products_image);
         holder.name.setText(entities.get(position).products_name);
         holder.price.setText("$" + entities.get(position).price);
-        holder.time.setText(TimeUtils.getMin(entities.get(position).events_date));
+        if (flag==1){
+            holder.time.setText(TimeUtils.getHour(entities.get(position).events_date));
+        }else{
+            holder.time.setText(TimeUtils.getMin(entities.get(position).events_date));
+        }
+
 
         if (entities.get(position).favorite==1){
             holder.checkBox.setImageResource(R.mipmap.atten_checked);

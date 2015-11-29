@@ -104,7 +104,7 @@ public class TodayadvActivity extends BaseActivity implements View.OnClickListen
         title.setText("今日预告");
         title_time.setText(TimeUtils.getNowdate());
         torrowadv.setOnClickListener(this);
-        adapter = new TodayadvAdapter(this, width,entities,handler);
+        adapter = new TodayadvAdapter(this, width,entities,handler,1);
         gridView.setAdapter(adapter);
 
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

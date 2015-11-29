@@ -21,6 +21,8 @@ public class TimeUtils {
 
 	public static final SimpleDateFormat DATE_FORMAT_DATE4= new SimpleDateFormat(
 			"M月d日");
+	public static final SimpleDateFormat DATE_FORMAT_DATE6= new SimpleDateFormat(
+			"HH:mm");
 	public static final SimpleDateFormat DATE_FORMAT_DATE5= new SimpleDateFormat(
 			"yyyy/MM/dd HH:mm");
 
@@ -40,6 +42,11 @@ public class TimeUtils {
 		Date date=new Date();
 		date.setTime(mill * 1000);
 		return  DATE_FORMAT_DATE3.format(date);
+	}
+	public static String getHour(long mill){
+		Date date=new Date();
+		date.setTime(mill * 1000);
+		return  DATE_FORMAT_DATE6.format(date);
 	}
 
 	public static String getNoticeTime(long mill){
