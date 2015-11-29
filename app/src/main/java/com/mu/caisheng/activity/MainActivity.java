@@ -116,7 +116,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 40:
-                    mController = ShareUtils.Share(MainActivity.this, "我在【猜神到】参与了免费赢得了"+entity.products_name+"大奖。快来一起加入全球最火热的电商猜价游戏吧，赢取每整点时段的时尚大奖，从此当上大猜神，迎娶白富美，走上人生的巅峰！我在猜神到，等你来战！！！APP下载地址：xxxx", entity.products_image, entity.products_url);
+                    mController = ShareUtils.Share(MainActivity.this, "我在【猜神到】参与了免费赢得了"+entity.products_name+"大奖。快来一起加入全球最火热的电商猜价游戏吧，赢取每整点时段的时尚大奖，从此当上大猜神，迎娶白富美，走上人生的巅峰！我在猜神到，等你来战！！！APP下载地址：http://101.200.192.147/guess.apk", entity.products_image,"http://101.200.192.147/guess.apk");
                     break;
                 case 222:
                     if (entity != null) {
