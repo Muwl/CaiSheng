@@ -153,14 +153,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         hotEntities = new ArrayList<>();
         initView();
 
-        getHotGoods();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         getGuess();
-        getHotGoods();
+
     }
 
     @Override
@@ -417,6 +416,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         if (entity == null) {
                             return;
                         }
+                        getHotGoods(entity.products_id);
                         LogManager.LogShow("====", entity.toString(), LogManager.ERROR);
                         bitmapUtils.display(main_image, entity.products_image);
                         main_image.setOnClickListener(new View.OnClickListener() {
@@ -480,10 +480,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     /**
      * 获取热卖商品
      */
-    private void getHotGoods() {
+    private void getHotGoods(String id) {
         HttpUtils utils = new HttpUtils();
         utils.configTimeout(20000);
         RequestParams rp = new RequestParams();
+        rp.addBodyParameter("id",id);
         utils.send(HttpRequest.HttpMethod.POST, Constant.ROOT_PATH + "getHotGoods", rp, new RequestCallBack<String>() {
             @Override
             public void onStart() {
