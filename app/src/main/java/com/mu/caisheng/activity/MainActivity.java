@@ -134,6 +134,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                             }
                             guess.setEnabled(false);
                             guess.setClickable(false);
+
                         }
                     }
                     break;
@@ -159,6 +160,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onResume() {
         super.onResume();
         getGuess();
+        getHotGoods();
     }
 
     @Override
@@ -504,6 +506,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                         if (list == null) {
                             list = new ArrayList<GuessEntity>();
                         }
+                        hotEntities.clear();
                         for (int i = 0; i < list.size(); i++) {
                             hotEntities.add(list.get(i));
                         }
