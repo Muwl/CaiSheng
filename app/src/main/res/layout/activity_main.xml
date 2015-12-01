@@ -41,7 +41,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
-                        android:src="@color/colorPrimary" />
+                        android:src="@mipmap/img_default" />
 
                     <TextView
                         android:id="@+id/main_time"
