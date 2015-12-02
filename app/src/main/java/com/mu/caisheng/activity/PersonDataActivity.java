@@ -189,6 +189,7 @@ public class PersonDataActivity extends BaseActivity implements View.OnClickList
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         ToastUtils.displayShortToast(
                                 PersonDataActivity.this, state.result);
+                        ShareDataTool.saveState( PersonDataActivity.this,1);
                     } else {
                         ToastUtils.displayShortToast(
                                 PersonDataActivity.this, state.result);

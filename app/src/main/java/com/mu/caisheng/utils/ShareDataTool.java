@@ -28,6 +28,16 @@ public class ShareDataTool {
 		return e.commit();
 	}
 
+
+
+	public static boolean saveState(Context context, int state) {
+		SharedPreferences sp = context.getSharedPreferences("sp",
+				Context.MODE_PRIVATE);
+		Editor e = sp.edit();
+		e.putInt("state", state);
+		return e.commit();
+	}
+
 	/**
 	 * 获取token
 	 *
