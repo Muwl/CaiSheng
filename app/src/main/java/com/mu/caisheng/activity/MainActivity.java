@@ -574,6 +574,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     if (Constant.RETURN_OK.equals(state.msg)) {
                         ToastUtils.displayShortToast(
                                 MainActivity.this, state.result);
+                        entity.bidnum=entity.bidnum+1;
+                        comNum.setText(Html.fromHtml("已有<font color=\"#f7dc1d\">" + entity.bidnum + "</font>人出价"));
+                        input_price.setText("");
                         CustomeDialog dialog = new CustomeDialog(MainActivity.this, handler);
                     } else if (Constant.RETURN_TOKENERROR.equals(state.msg)) {
                         ToastUtils.displayShortToast(

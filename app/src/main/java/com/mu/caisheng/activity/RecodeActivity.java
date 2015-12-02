@@ -120,7 +120,7 @@ public class RecodeActivity extends BaseActivity implements View.OnClickListener
                     ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
                     LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        if (ToosUtils.isStringEmpty(state.result)) {
+                        if (ToosUtils.isStringEmpty(state.result) || "[]".equals(state.result)) {
                             return;
                         }
                         RecodeEntity entity = gson.fromJson(state.result, RecodeEntity.class);
@@ -153,7 +153,7 @@ public class RecodeActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void onFailure(HttpException e, String s) {
                 pro.setVisibility(View.GONE);
-                ToastUtils.displaySendFailureToast(RecodeActivity.this);
+                //ToastUtils.displaySendFailureToast(RecodeActivity.this);
             }
         });
 
