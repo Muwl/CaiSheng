@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="销量:35"
+            android:visibility="gone"
             android:textColor="#d7d5d5"
             android:textSize="11sp" />
 
