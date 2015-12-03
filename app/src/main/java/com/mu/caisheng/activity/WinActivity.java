@@ -67,6 +67,8 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
 
     private BitmapUtils bitmapUtils;
 
+    private View gv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,7 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
         close = (TextView) findViewById(R.id.win_close);
         imageView = (ImageView) findViewById(R.id.win_image);
         name = (TextView) findViewById(R.id.win_name);
+        gv=findViewById(R.id.win_gv);
         pro=findViewById(R.id.win_pro);
 
         int width = DensityUtil.getScreenWidth(this);
@@ -128,6 +131,7 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onStart() {
                 pro.setVisibility(View.VISIBLE);
+                gv.setVisibility(View.GONE);
                 super.onStart();
             }
 
@@ -139,13 +143,16 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
                     ReturnState state = gson.fromJson(arg0.result, ReturnState.class);
                     LogManager.LogShow("guessdata", state.result, LogManager.ERROR);
                     if (Constant.RETURN_OK.equals(state.msg)) {
-                        if (ToosUtils.isStringEmpty(state.result)){
+                        if (ToosUtils.isStringEmpty(state.result)) {
+                            finish();
                             return;
                         }
                         entity=gson.fromJson(state.result,WinEntity.class);
                         if (entity==null){
+                            finish();
                             return;
                         }
+                        gv.setVisibility(View.VISIBLE);
                         tip.setText(entity.content);
                         bitmapUtils.display(imageView, entity.products_image);
                         name.setText(Html.fromHtml(entity.products_name + "<br> 价格：<font color=\"#ffbf25\">$" + entity.price + "</font>"));
@@ -162,15 +169,18 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
                         });
 
                     }else if(Constant.RETURN_TOKENERROR.equals(state.msg)){
+                        finish();
                         ToastUtils.displayShortToast(
                                 WinActivity.this, state.result);
                         ToosUtils.goLogin(WinActivity.this);
                     } else {
+                        finish();
                         ToastUtils.displayShortToast(
                                 WinActivity.this, state.result);
                     }
 
                 } catch (Exception e) {
+                    finish();
                     e.printStackTrace();
                     ToastUtils.displaySendFailureToast(WinActivity.this);
                 }
@@ -179,6 +189,7 @@ public class WinActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onFailure(HttpException e, String s) {
                 pro.setVisibility(View.GONE);
+                finish();
                 ToastUtils.displaySendFailureToast(WinActivity.this);
             }
         });
